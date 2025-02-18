@@ -40,9 +40,7 @@ function App() {
         </section>
   
         {/* Footer */}
-        <footer className="footer">
-          <p>&copy; 2023 TechZone. All rights reserved.</p>
-        </footer>
+        <Footer/>
       </div>
     );
   }
