@@ -1,50 +1,33 @@
-import React from 'react';
-import Navbar from './components/navbar/navbar';
-import Footer from './components/footer/footer';
-import './App.css';
-function App() {
-    return (
-      <div className="App">
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ProductsPage from "./components/products/ProductsPage";
+import CartPage from "./components/cart/CartPage";
+import HomePage from "./components/homepage/HomePage";
+import ContactPage from "./components/ContactUs/ConactUs";
+import AboutPage from "./components/AboutPage/AboutPage";
+import Navbar from "./components/navbar/navbar";
+import Footer from "./components/footer/footer";
+
+
+export default function App() {
+  return (
+    <Router>
+      <div className="p-4 bg-gray-100 min-h-screen">
         {/* Navigation Bar */}
-        <Navbar /> 
-        {/* Hero Section */}
-        <section id="home" className="hero">
-          <div className="hero-content">
-            <h1>Welcome to TechZone</h1>
-            <p>Your one-stop shop for computers and computer parts.</p>
-            <button className="cta-button">Shop Now</button>
-          </div>
-        </section>
-  
-        {/* Featured Products Section */}
-        <section id="products" className="featured-products">
-          <h2>Featured Products</h2>
-          <div className="product-cards">
-            <div className="card">
-              <img src="https://via.placeholder.com/200" alt="Product 1" />
-              <h3>Gaming PC</h3>
-              <p>High-performance gaming desktops for the ultimate experience.</p>
-              <button className="product-button">View Details</button>
-            </div>
-            <div className="card">
-              <img src="https://via.placeholder.com/200" alt="Product 2" />
-              <h3>Graphics Cards</h3>
-              <p>Top-tier GPUs for gaming and professional work.</p>
-              <button className="product-button">View Details</button>
-            </div>
-            <div className="card">
-              <img src="https://via.placeholder.com/200" alt="Product 3" />
-              <h3>SSD Storage</h3>
-              <p>Blazing-fast SSDs for improved performance.</p>
-              <button className="product-button">View Details</button>
-            </div>
-          </div>
-        </section>
-  
-        {/* Footer */}
-        <Footer/>
+      <Navbar /> 
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/aboutus" element ={<AboutPage/>}/>
+        </Routes>
       </div>
-    );
-  }
+       {/* Footer */}
+    <Footer/>
+    </Router>
   
-  export default App;
+   
+    
+  );
+}
