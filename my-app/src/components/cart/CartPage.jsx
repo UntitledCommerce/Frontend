@@ -16,6 +16,30 @@ export default function CartPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setOrderSuccess(true);
+	const order = {
+        id: Math.floor(Math.random() * 1000000),
+        items: [...cartItems],
+        name: form.name,
+        company: "C",
+        phone: form.phone,
+        email: "client@heapforge.com",
+        address_l1: form.address,
+        address_l2: "C",
+        city: "Qgodovo",
+        province: "Plovdiv",
+        country: "Bulgaria",
+        courier: "123",
+        tracking: "123",
+        delivery_message: "Please leave at front door",
+        status: "Pending"
+    };
+
+    fetch('http://localhost:8080/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(order)
+    });
+
     alert(`Поръчка приета!\n\nИме: ${form.name}\nАдрес: ${form.address}\nТелефон: ${form.phone}\nПлащане: ${form.payment}`);
     localStorage.removeItem("cart");
     setCartItems([]);
@@ -44,14 +68,14 @@ export default function CartPage() {
               <li key={item.id || idx} className="cart-item">
                 <div className="item-info">
                   <span>{item.name} </span>
-                  <span>{item.price?.toFixed(2)} лв</span>
+                  <span>{parseFloat(item.price).toFixed(2)} лв</span>
                 </div>
                 <button className="remove-button" onClick={() => handleRemove(idx)}>🗑 Премахни</button>
               </li>
             ))}
           </ul>
 
-          <div className="cart-total">Общо: {total.toFixed(2)} лв</div>
+          <div className="cart-total">Общо: {parseFloat(total).toFixed(2)} лв</div>
 
           <form onSubmit={handleSubmit} className="order-form" aria-label="Форма за поръчка">
             <input

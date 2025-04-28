@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import './ProductPage.css'
 
 // Dummy product data
-const products = Array.from({ length: 20 }, (_, i) => ({
-  id: i + 1,
-  name: `Продукт ${i + 1}`,
-  category: i % 2 === 0 ? "Категория A" : "Категория B",
-  price: parseFloat((10 + i * 3).toFixed(2)),
-  image: `https://via.placeholder.com/150?text=Product+${i + 1}`,
-}));
+
+async function getProducts()
+{
+	const result = await fetch('http://localhost:8080/products'); 
+	return await result.json();
+}
+
+const products = await getProducts();
 
 export default function ProductsPage() {
   const [search, setSearch] = useState("");
@@ -39,7 +40,7 @@ export default function ProductsPage() {
           onChange={(e) => setSearch(e.target.value)}
         />
         <select
-          value={category}
+          value={(e) => category.join(", ")}
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value="">Всички</option>
@@ -55,13 +56,13 @@ export default function ProductsPage() {
         {filteredProducts.map((product) => (
           <div key={product.id} className="product-card">
             <img
-              src={product.image}
+              src={product.images}
               alt={product.name}
             />
             <h3>{product.name}</h3>
-            <p>{product.category}</p>
+            <p>{product.category.join(", ")}</p>
             <div className="flex justify-between items-center">
-              <span className="price">{product.price.toFixed(2)} лв</span>
+              <span className="price">{parseFloat(product.price).toFixed(2)} лв</span>
               <button onClick={() => addToCart(product)}>Добави</button>
             </div>
           </div>
